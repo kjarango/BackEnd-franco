@@ -1,47 +1,50 @@
 import express from 'express';
 const router = express.Router();
-
+// Filtrar campos de PUT
+const _ = require('underscore');
 
 // importar el modelo datos personales
 import Datos from '../models/datosPerson';
 
-
+// Hash Contraseña
+const bcrypt = require('bcrypt');
+const saltRounds = 10
+const {verificarAuth} = require('../middlewares/autenticacion.js');
 // Agregar una datos personales
 
 router.post('/nuevaPersona', async(req, res) => {
-  console.log("ok")
-  console.log(req.body) 
-  res.json("ok")
    
-  const nuevoDato ={
+  const nuevoDato = {
     nombre: req.body.nombre,
-    docIdentidad: req.body.docIdentidad,
-    telefono: req.body.telefono,
-    direccion: req.body.direccion,
-    correo: req.body.correo,
-    fechaNacimiento: req.body.fechaNacimiento
-  }  
-  console.log(req.body)
- 
+    docIdentidad:  req.body.docIdentidad,
+    telefono:  req.body.telefono,
+    direccion: req.body.direccion, 
+    correo:  req.body.correo,
+    fechaNacimiento:  req.body.fechaNacimiento,
+    pais: req.body.pais,
+    ingles: req.body.ingles,
+    inscripcion: req.body.inscripcion,
+    role:  req.body.role
+    
+    }
+
+    nuevoDato.pass = bcrypt.hashSync(req.body.pass, saltRounds);
+
   try {
 
-    const datosDB = await Datos.save(nuevoDato);
+    const datosDB = await Datos.create(nuevoDato);
     res.status(200).json(datosDB);
-    console.log(nuevoDato) 
-    res.json("ok")
+
  
   } catch (error) {
-    return res.status(500).json({
-      mensaje: 'Ocurrio un error',
-      error
-    })
+    return res.send(`Error: ${error}`)
   }
   
 });
 
 
 // Get con parámetros
-router.get('/datos/:id', async(req, res) => {
+router.get('/datos/:id', verificarAuth , async(req, res) => {
     const _id = req.params.id;
     try {
       const datosDB = await Datos.findOne({_id});
@@ -73,12 +76,16 @@ router.get('/datos/:id', async(req, res) => {
 
 router.put('/datos/:id', async(req, res) => {
     const _id = req.params.id;
-    const body = req.body;
+    const body = _.pick(req.body,['nombre','correo','pass','telefono', 'direccion','docIdentidad','ingles','fechaNacimiento']);
+    if(body.pass){
+      nuevoDato.pass = bcrypt.hashSync(req.body.pass, saltRounds);
+    }
+    
     try {
       const datosDb = await Datos .findByIdAndUpdate(
         _id,
         body,
-        {new: true});
+        {new: true, runValidators: true});
       res.json(datosDb);  
     } catch (error) {
       return res.status(400).json({

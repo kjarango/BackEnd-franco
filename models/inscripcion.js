@@ -1,13 +1,18 @@
 import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
+const Campus = require('../models/campus');
+const Datos = require('../models/datosPerson');
+const Hospedaje= require('../models/hospedaje');
+const Curso = require('../models/curso');
+
 
 const inscripcionSchema = new Schema({
-  campus: { type:String, require: true},
-  docIdentidad:  { type:String, require: true},
-  constoInscrip: {type: Number, require: true},
-  hospedaje: { type:String, require: true},
-  curso:  { type:String, require: true},
-  fechaInicio: { type:Date, require: true}
+  campus: { type: Schema.Types.ObjectId, ref: 'Campus'},
+  docIdentidad:  { type: Schema.Types.ObjectId, ref: 'Datos'},
+  constoInscrip: {type: Number},
+  hospedaje: { type: Schema.Types.ObjectId, ref: 'Hospedaje'},
+  curso:  { type: Schema.Types.ObjectId, ref: 'Curso'},
+  fechaInicio: { type:String}
  
 });
 
