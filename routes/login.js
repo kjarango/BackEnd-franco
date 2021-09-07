@@ -22,14 +22,14 @@ router.post('/', async(req, res) => {
       // Evaluamos si existe el usuario en DB
       if(!datosDB){
         return res.status(400).json({
-          mensaje: 'Usuario! o contraseña inválidos',
+          mensaje: 'Usuario! inválido',
         });
       }
   
       // Evaluamos la contraseña correcta
       if( !bcrypt.compareSync(body.pass, datosDB.pass) ){
         return res.status(400).json({
-          mensaje: 'Usuario o contraseña! inválidos',
+          mensaje: 'contraseña! inválidos',
         });
       }
   

@@ -22,6 +22,7 @@ router.post('/nuevaPersona', async(req, res) => {
     correo:  req.body.correo,
     fechaNacimiento:  req.body.fechaNacimiento,
     pais: req.body.pais,
+    ciudad: req.body.ciudad,
     ingles: req.body.ingles,
     inscripcion: req.body.inscripcion,
     role:  req.body.role
@@ -44,7 +45,7 @@ router.post('/nuevaPersona', async(req, res) => {
 
 
 // Get con parámetros
-router.get('/datos/:id', verificarAuth , async(req, res) => {
+router.get('/datos/:id', async(req, res) => {
     const _id = req.params.id;
     try {
       const datosDB = await Datos.findOne({_id});

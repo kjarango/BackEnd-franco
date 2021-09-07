@@ -1,6 +1,5 @@
 import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
-const Pais = require('../models/Pais');
 const Ingles = require('../models/ingles');
 const Inscripcion = require('../models/inscripcion');
 const uniqueValidator = require('mongoose-unique-validator');
@@ -18,8 +17,9 @@ const datosSchema = new Schema({
   telefono: {type: Number, require: true},
   direccion: { type:String, require: true},
   correo:  { type:String,require: [true, 'el correo es obligatorio'], unique: true },
-  fechaNacimiento: { type:Date },
-  pais:{ type: Schema.Types.ObjectId, ref: 'Pais' },
+  fechaNacimiento: { type:String },
+  pais:{ type: String },
+  ciudad:{ type: String },
   ingles:{ type: Schema.Types.ObjectId, ref: 'Ingles'},
   inscripcion:{ type: Schema.Types.ObjectId, ref: 'Inscripcion'},
   role: { type: String, default: 'USER', enum: roles },

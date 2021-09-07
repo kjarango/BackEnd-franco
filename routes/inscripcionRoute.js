@@ -1,12 +1,12 @@
 import express from 'express';
 const router = express.Router();
-const {verificarAuth, verificarAdministrador} = require('../middlewares/autenticacion')
+//const {verificarAuth, verificarAdministrador} = require('../middlewares/autenticacion')
 import Inscripcion from '../models/inscripcion'
 
 // Agregar una nota
-router.post('/nuevaInscrip',verificarAuth, async(req, res) => {
+router.post('/nuevaInscrip', async(req, res) => {
   const body = req.body;  
-  body.usuarioId = req.usuario._id;
+  
   try {
     const inscripcionDB = await Inscripcion.create(body);
     res.status(200).json(inscripcionDB); 
@@ -34,8 +34,8 @@ router.get('/inscripcion/:id', async(req, res) => {
   });
   
   // Get con todos los documentos
-  router.get('/inscripcion',verificarAuth, async(req, res) => {
-    const usuarioId = req.usuario._id
+  router.get('/inscripcion', async(req, res) => {
+    
     try {
       const inscripcionDb = await Inscripcion.find();
       res.json(inscripcionDb);
