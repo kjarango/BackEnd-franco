@@ -9,8 +9,6 @@ const roles = {
   values: ['ADMIN', 'USER'],
   message: '{VALUE} no es un rol válido'
 }
-
-
 const datosSchema = new Schema({
   nombre: { type:String, require: true},
   docIdentidad:  { type:String, require: true},
