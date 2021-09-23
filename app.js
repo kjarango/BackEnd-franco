@@ -24,6 +24,8 @@ app.use('/api', require('./routes/inscripcionRoute'));
 app.use('/api', require('./routes/preguntaRoute'));
 app.use('/api', require('./routes/respuestaRoute'));
 app.use('/api', require('./routes/documentosRoute'));
+app.use('/api', require('./routes/preguntasFvRoutes'));
+app.use('/api', require('./routes/preguntasAbiRoutes'));
 
 app.use('/api/login', require('./routes/login'));
 

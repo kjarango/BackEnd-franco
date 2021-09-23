@@ -18,7 +18,7 @@ const datosSchema = new Schema({
   fechaNacimiento: { type:String },
   pais:{ type: String },
   ciudad:{ type: String },
-  ingles:{ type: Schema.Types.ObjectId, ref: 'Ingles'},
+  ingles:{ type: String, ref: 'Ingles'},
   inscripcion:{ type: Schema.Types.ObjectId, ref: 'Inscripcion'},
   role: { type: String, default: 'USER', enum: roles },
   pass:{ type:String, require: true},
